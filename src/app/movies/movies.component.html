@@ -1,0 +1,31 @@
+<div class="search-bar">
+  <img src="assets/icons/search.svg" alt="search icon">
+  <input [(ngModel)]="searchText" name="searchText" type="search" placeholder="Search" aria-label="Search">
+</div>
+<div class="main-container">
+<div class="genres-list">
+  <span class="title">Welcome</span>
+</div>
+<app-loading-spinner [loading]="!visibleMovies"></app-loading-spinner>
+<div *ngIf="visibleMovies" class="movies-container" [@simpleFadeAnimation]="'in'">
+  <div class="movies-list-header">
+    <div class="sort">
+      SORT BY:
+      <select [(ngModel)]="sortBy">
+        <option value="rate">Rate</option>
+            </select>
+    </div>
+  </div>
+  <div class="movies-list">
+    <div *ngFor="let movie of visibleMovies | filter: searchText | sort: sortBy" class="movie">
+      <a [routerLink]="['/movies/' + movie.id + '/' + movie.key]">
+        <figure>
+          <img src="assets/movies/{{movie.img}}" alt="movie poster">
+        </figure>
+        <span class="title">{{movie.name}}</span>
+        <span class="rate">{{movie.rate}}</span>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
